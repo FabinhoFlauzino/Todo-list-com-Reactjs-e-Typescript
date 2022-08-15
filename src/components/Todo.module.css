@@ -1,0 +1,135 @@
+.todoContainer {
+    display: grid;
+    max-width: 73.6rem;
+    margin: 0 auto;
+    padding-inline: 1rem;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    gap: .8rem;
+    margin-top: -2.7rem;
+}
+
+form .inputForm {
+    width: 100%;
+    padding: 1.6rem;
+    border: none;
+    border-radius: var(--border-radius);
+    background: var(--gray-500);
+    font-size: var(--font-16);
+    line-height: var(--line-height-1);
+    color: var(--gray-100);
+    outline: none;
+}
+
+form .inputForm:focus {
+    background: var(--gray-400);
+}
+
+form .buttonSubmit {
+    padding: 1.6rem;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    background: var(--blue-300);
+    border: transparent;
+
+    font-size: 1.4rem;
+    line-height: var(--line-height-1);
+    font-weight: 700;
+    color: var(--gray-100);
+
+    cursor: pointer;
+}
+
+form .buttonSubmit:hover {
+    background: var(--blue-500);
+}
+
+form .buttonSubmit svg g path {
+    fill: var(--gray-100);
+}
+
+.todoListWrapper {
+    margin-block: 6.4rem;
+}
+
+.todoListWrapper header {
+    margin-bottom: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.todoListWrapper header p {
+    font-weight: 700;
+    font-size: var(--font-14);
+    line-height: 17px;
+    display: flex;
+    gap: .8rem;
+}
+
+.todoListWrapper header p:nth-child(1) {
+    color: var(--blue-300);
+}
+
+.todoListWrapper header p:nth-child(2) {
+    color: var(--purple-300);
+}
+
+
+.todoListWrapper header p span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 8px;
+    gap: 10px;
+
+    width: fit-content;
+
+    background: var(--gray-400);
+    border-radius: 999px;
+
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+
+    color: var(--gray-200);
+}
+
+.todoListWrapperContent{
+    width: 100%;
+    min-height: 24.4rem;
+    
+    border-top: 1px solid var(--gray-400);
+    border-radius: 8px; 
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.todoListNotContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.todoListNotContent p {
+    font-weight: 700;
+    font-size: var(--font-16);
+    line-height: var(--line-height-1);
+    color: var(--gray-300);
+    text-align: center;
+    margin-block: 1.6rem;
+}
+
+.todoListNotContent p span{
+    display: block;
+    font-weight: 400;
+}
