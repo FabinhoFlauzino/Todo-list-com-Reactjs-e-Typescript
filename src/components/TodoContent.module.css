@@ -15,6 +15,13 @@
     border-radius: 8px;
 }
 
+.todoContentWrapper .todoItem{
+    flex: 1;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
 .todoContentWrapper input[type="checkbox"] {
     width: 0;
     margin-right: 2.0rem;
@@ -45,6 +52,11 @@
     background: var(--blue-opacity-20);
 }
 
+.todoContentWrapper input[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+    color: var(--gray-300);
+}
+
 .todoContentWrapper input[type="checkbox"]:checked::after {
     content: "✓";
     background: var(--purple-500);
@@ -61,6 +73,11 @@
     font-size: var(--font-14);
     color: var(--gray-100);
     cursor: pointer;
+}
+
+.todoContentWrapper button {
+    background: transparent;
+    border: none;
 }
 
 .todoContentWrapper svg{

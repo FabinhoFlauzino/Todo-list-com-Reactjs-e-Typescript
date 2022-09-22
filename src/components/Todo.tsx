@@ -1,12 +1,50 @@
 import styles from './Todo.module.css';
 import clipBoard from '../image/clipboard.svg';
 import { TodoContent } from './TodoContent';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 export function Todo() {
+
+    const [tarefas, setTarefas] = useState(['Estudar React'])
+
+    const [newTodoItem, setNewTodoItem] = useState('')
+
+    const [totalCriada, setTotalCriada] = useState(0)
+
+    function handleCreateItem(event: FormEvent) {
+        event.preventDefault()
+
+        setTarefas([...tarefas, newTodoItem])
+
+        setTotalCriada(tarefas.length + 1)
+        
+        setNewTodoItem('')
+    }
+
+    function handleNewTodoItemChange(event: ChangeEvent<HTMLInputElement>){
+        setNewTodoItem(event.target.value);
+    }
+
+    function deleteItemTodo(todoItem: any){
+        const removeOneTodo = tarefas.filter(item => {
+            return item !== todoItem
+        })
+
+        setTotalCriada(removeOneTodo.length)
+        setTarefas(removeOneTodo)
+    }
+
     return (
         <div className={styles.todoContainer}>
-            <form>
-                <input className={styles.inputForm} type="text" placeholder="Adicione uma nova tarefa" />
+            <form onSubmit={handleCreateItem}>
+                <input className={styles.inputForm}
+                    name="itemList"
+                    type="text"
+                    value={newTodoItem}
+                    placeholder="Adicione uma nova tarefa"
+                    onChange={handleNewTodoItemChange}
+                    required
+                />
                 <button type="submit" className={styles.buttonSubmit}>
                     Criar
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,8 +58,8 @@ export function Todo() {
 
             <div className={styles.todoListWrapper}>
                 <header>
-                    <p>Tarefas criadas <span>0</span></p>
-                    <p>Concluidas <span>0 de 5</span></p>
+                    <p>Tarefas criadas <span>{totalCriada}</span></p>
+                    <p>Concluidas <span>0 de {totalCriada}</span></p>
                 </header>
 
                 <div className={styles.todoListWrapperContent}>
@@ -33,11 +71,12 @@ export function Todo() {
                         </p>
                     </div> */}
 
-                    <TodoContent />
-                    <TodoContent />
-                    <TodoContent />
-                    <TodoContent />
-                    
+                    {tarefas.map((tarefa) => {
+                        return (
+                            <TodoContent key={tarefa} todoItem={tarefa} onDeleteItemTodo={deleteItemTodo}/>
+                        )
+                    })}
+
                 </div>
             </div>
         </div>
