@@ -53,6 +53,13 @@ form .buttonSubmit svg g path {
     fill: var(--gray-100);
 }
 
+form .buttonSubmit:disabled{
+    opacity: 0.7;
+    cursor: no-drop;
+    background: var(--blue-300);
+    box-shadow: inset -2px -2px 10px 5px var(--blue-500);
+}
+
 .todoListWrapper {
     margin-block: 6.4rem;
 }

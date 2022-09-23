@@ -1,20 +1,26 @@
 import styles from './TodoContent.module.css';
+import { ChangeEvent } from 'react';
 
 interface TodoItem {
+    id: string
     todoItem: string
+    isChecked: (ischecked: boolean) => void
     onDeleteItemTodo: (todoItem: string) => void
 }
 
-export function TodoContent({ todoItem,  onDeleteItemTodo}: TodoItem) {
+export function TodoContent({ id, todoItem,  onDeleteItemTodo, isChecked}: TodoItem) {
 
     function handleDeleteItem(){
         onDeleteItemTodo(todoItem)
+    }
+    function checked(event: ChangeEvent<HTMLInputElement>){
+        isChecked(!isChecked)
     }
 
     return (
         <div className={styles.todoContentWrapper}>
             <div className={styles.todoItem}>
-                <input type="checkbox" name="tarefa" id="tarefa" />
+                <input type="checkbox" name="tarefa" id="tarefa" onChange={checked} checked={!checked}/>
                 <label htmlFor="tarefa">
                     {todoItem}
                 </label>

@@ -2,14 +2,17 @@ import styles from './Todo.module.css';
 import clipBoard from '../image/clipboard.svg';
 import { TodoContent } from './TodoContent';
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { v4 } from 'uuid';
 
 export function Todo() {
 
-    const [tarefas, setTarefas] = useState(['Estudar React'])
+    const [tarefas, setTarefas] = useState<string[]>([])
 
     const [newTodoItem, setNewTodoItem] = useState('')
 
     const [totalCriada, setTotalCriada] = useState(0)
+
+    const [checked, setChecked] = useState(false)
 
     function handleCreateItem(event: FormEvent) {
         event.preventDefault()
@@ -17,15 +20,20 @@ export function Todo() {
         setTarefas([...tarefas, newTodoItem])
 
         setTotalCriada(tarefas.length + 1)
-        
+
         setNewTodoItem('')
     }
 
-    function handleNewTodoItemChange(event: ChangeEvent<HTMLInputElement>){
+    function handleNewTodoItemChange(event: ChangeEvent<HTMLInputElement>) {
+        event.target.setCustomValidity('')
         setNewTodoItem(event.target.value);
     }
 
-    function deleteItemTodo(todoItem: any){
+    function handleNewTodoItemInvalid(event: ChangeEvent<HTMLInputElement>) {
+        event.target.setCustomValidity('Esse campo é obrigatório')
+    }
+
+    function deleteItemTodo(todoItem: any) {
         const removeOneTodo = tarefas.filter(item => {
             return item !== todoItem
         })
@@ -33,6 +41,17 @@ export function Todo() {
         setTotalCriada(removeOneTodo.length)
         setTarefas(removeOneTodo)
     }
+
+    function isChecked(task: any){
+        const checked = tarefas.filter(item => {
+            return item !== task
+        })
+        setTarefas(checked)
+        setChecked(!checked)
+        console.log(checked)
+    }
+
+    const todoInputEmpty = newTodoItem.length === 0
 
     return (
         <div className={styles.todoContainer}>
@@ -43,9 +62,10 @@ export function Todo() {
                     value={newTodoItem}
                     placeholder="Adicione uma nova tarefa"
                     onChange={handleNewTodoItemChange}
+                    onInvalid={handleNewTodoItemInvalid}
                     required
                 />
-                <button type="submit" className={styles.buttonSubmit}>
+                <button type="submit" className={styles.buttonSubmit} disabled={todoInputEmpty}>
                     Criar
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g clip-path="url(#clip0_1105_11)">
@@ -63,19 +83,21 @@ export function Todo() {
                 </header>
 
                 <div className={styles.todoListWrapperContent}>
-                    {/* <div className={styles.todoListNotContent}>
-                        <img src={clipBoard} />
-                        <p>
-                            Você ainda não tem tarefas cadastradas
-                            <span>Crie tarefas e organize seus itens a fazer</span>
-                        </p>
-                    </div> */}
 
-                    {tarefas.map((tarefa) => {
+                    {tarefas.length > 0 ? tarefas.map((tarefa, uuid) => {
+                        const uuidv4 = v4()
                         return (
-                            <TodoContent key={tarefa} todoItem={tarefa} onDeleteItemTodo={deleteItemTodo}/>
+                            <TodoContent key={uuidv4} id={uuidv4} todoItem={tarefa} onDeleteItemTodo={deleteItemTodo} isChecked={isChecked}/>
                         )
-                    })}
+                    }) : (
+                        <div className={styles.todoListNotContent}>
+                            <img src={clipBoard} />
+                            <p>
+                                Você ainda não tem tarefas cadastradas
+                                <span>Crie tarefas e organize seus itens a fazer</span>
+                            </p>
+                        </div>
+                    )}
 
                 </div>
             </div>
