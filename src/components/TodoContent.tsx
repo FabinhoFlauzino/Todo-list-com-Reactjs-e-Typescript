@@ -1,5 +1,5 @@
 import styles from './TodoContent.module.css';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, FormEvent, useState } from 'react';
 
 interface TodoItem {
     id: string
@@ -10,17 +10,25 @@ interface TodoItem {
 
 export function TodoContent({ id, todoItem,  onDeleteItemTodo, isChecked}: TodoItem) {
 
+    const [check, setCheck] = useState<boolean>(false)
+
     function handleDeleteItem(){
         onDeleteItemTodo(todoItem)
     }
-    function checked(event: ChangeEvent<HTMLInputElement>){
-        isChecked(!isChecked)
+    function handleChecked(){
+        setCheck(!check)
+        isChecked(check)
     }
 
+    
     return (
         <div className={styles.todoContentWrapper}>
             <div className={styles.todoItem}>
-                <input type="checkbox" name="tarefa" id="tarefa" onChange={checked} checked={!checked}/>
+                <input type="checkbox" name="tarefa"
+                    onChange={handleChecked} 
+                    checked={check}
+                />
+
                 <label htmlFor="tarefa">
                     {todoItem}
                 </label>
